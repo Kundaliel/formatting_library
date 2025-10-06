@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "formatting-library"
-version = "1.2.5"
+version = "1.2.5.1"
 description = "A Python library for terminal text formatting, colors, and ASCII art"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -32,9 +32,9 @@ dependencies = [
 requires-python = ">=3.8"
 
 [project.urls]
-Homepage = "https://github.com/Kundaliel/terminal_formatter"
-Repository = "https://github.com/Kundaliel/terminal_formatter"
-Issues = "https://github.com/Kundaliel/terminal_formatter/issues"
+Homepage = "https://github.com/Kundaliel/formatting_library"
+Repository = "https://github.com/Kundaliel/formatting_library"
+Issues = "https://github.com/Kundaliel/formatting_library/issues"
 PyPI = "https://pypi.org/project/formatting-library/"
 
 [project.optional-dependencies]
@@ -46,10 +46,10 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/terminal_formatter"]
+packages = ["src/formatting_library"]
 # Only use artifacts, not force-include
 artifacts = [
-    "src/terminal_formatter/_bin/**/*",
+    "src/formatting_library/_bin/**/*",
 ]
 
 [tool.hatch.build.targets.sdist]

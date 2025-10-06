@@ -25,7 +25,7 @@ pip install formatting-library
 ## Quick Start
 
 ```python
-from terminal_formatter import rainbow_text, slow_print, img_to_ascii
+from formatting_library import rainbow_text, slow_print, img_to_ascii
 
 # Rainbow text
 print(rainbow_text("Hello, World!"))
@@ -43,7 +43,7 @@ print(ascii_art)
 ### Color Functions
 
 ```python
-from terminal_formatter import rgb_fore, rgb_back, RGB, RESET
+from formatting_library import rgb_fore, rgb_back, RGB, RESET
 
 # Using RGB values directly
 print(f"{rgb_fore([255, 0, 0])}Red text{RESET}")
@@ -59,7 +59,7 @@ print(f"{rgb_back([0, 255, 0])}Green background{RESET}")
 ### Rainbow Text
 
 ```python
-from terminal_formatter import rainbow_text
+from formatting_library import rainbow_text
 
 # Foreground rainbow
 print(rainbow_text("This text has rainbow colors!"))
@@ -71,7 +71,7 @@ print(rainbow_text("Rainbow background!", background=True))
 ### Terminal Control
 
 ```python
-from terminal_formatter import clear_screen, set_cursor_position, Terminal
+from formatting_library import clear_screen, set_cursor_position, Terminal
 
 # Clear the screen
 clear_screen()
@@ -86,7 +86,7 @@ Terminal.replace_current_line("New text on this line")
 ### Text Formatting
 
 ```python
-from terminal_formatter import align, substitute
+from formatting_library import align, substitute
 
 # Text alignment
 text = "Hello World"
@@ -103,7 +103,7 @@ print(modified)  # Output: "Hello Python"
 ### Slow Printing
 
 ```python
-from terminal_formatter import slow_print, PrintOptions, RGB
+from formatting_library import slow_print, PrintOptions, RGB
 
 # Basic slow print
 slow_print("This appears character by character!")
@@ -121,7 +121,7 @@ slow_print("Customized slow text!", options)
 ### Text Color Codes
 
 ```python
-from terminal_formatter import formatted
+from formatting_library import formatted
 
 # Use text color codes
 text = "&cRed &aGreen &9Blue &lBold &nUnderline &rReset"
@@ -138,7 +138,7 @@ print(formatted(text))
 ### Image to ASCII Art
 
 ```python
-from terminal_formatter import img_to_ascii
+from formatting_library import img_to_ascii
 
 # Convert any image to colorful ASCII art
 ascii_art = img_to_ascii("photo.jpg")
@@ -150,7 +150,7 @@ print(ascii_art)
 ### Print Boxes
 
 ```python
-from terminal_formatter import ccb_gen
+from formatting_library import ccb_gen
 
 # Create decorative text boxes
 ccb_gen("Important Message")
@@ -165,7 +165,7 @@ ccb_gen("Important Message")
 ### Custom RGB Colors
 
 ```python
-from terminal_formatter import RGB, ColorFuncs
+from formatting_library import RGB, ColorFuncs
 
 # Create RGB color objects
 red = RGB(255, 0, 0)
@@ -182,7 +182,7 @@ print(f"{ColorFuncs.rgb_fore([128, 64, 192])}Custom purple{RESET}")
 ### Terminal Manipulation
 
 ```python
-from terminal_formatter import Terminal
+from formatting_library import Terminal
 
 # Terminal control
 Terminal.scroll_cursor(-3)  # Move cursor up 3 lines
@@ -195,7 +195,7 @@ Terminal.set_cursor_position(1, 1)  # Top-left corner
 Execute esoteric programming languages directly from Python:
 
 ```python
-from terminal_formatter import Esoteric, runBefunge, runLOLCODE
+from formatting_library import Esoteric, runBefunge, runLOLCODE
 
 # Run Befunge programs
 Esoteric.runBefunge("hello.bf")
@@ -256,7 +256,7 @@ int fast_multiply(int a, int b) {
 
 ```python
 # main.py
-from terminal_formatter import CBuilder
+from formatting_library import CBuilder
 import ctypes
 
 # Build the C library
@@ -319,7 +319,7 @@ The built-in rainbow uses these RGB values:
 ### Create a Colorful Banner
 
 ```python
-from terminal_formatter import rainbow_text, ccb_gen, clear_screen
+from formatting_library import rainbow_text, ccb_gen, clear_screen
 
 clear_screen()
 ccb_gen("WELCOME")
@@ -331,7 +331,7 @@ print(rainbow_text("=" * 50))
 ### Animated Greeting
 
 ```python
-from terminal_formatter import slow_print, PrintOptions, clear_screen
+from formatting_library import slow_print, PrintOptions, clear_screen
 
 clear_screen()
 options = PrintOptions(speed=10, text_color=[0, 255, 0])
@@ -341,7 +341,7 @@ slow_print("Hello! Welcome to Terminal Formatter!", options)
 ### Image Gallery
 
 ```python
-from terminal_formatter import img_to_ascii
+from formatting_library import img_to_ascii
 import os
 
 for filename in os.listdir("images/"):
@@ -353,7 +353,7 @@ for filename in os.listdir("images/"):
 ### Esoteric Language Runner
 
 ```python
-from terminal_formatter import runBefunge, runLOLCODE
+from formatting_library import runBefunge, runLOLCODE
 
 # Create a simple Befunge program
 with open("hello.bf", "w") as f:
@@ -382,7 +382,7 @@ runLOLCODE("greeting.lol")
 ### Performance Comparison
 
 ```python
-from terminal_formatter import CBuilder, ctypes
+from formatting_library import CBuilder, ctypes
 import time
 
 # Python version
@@ -415,24 +415,3 @@ MIT License - see LICENSE file for details.
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Changelog
-
-### v1.2.0
-- Added Esoteric class for running esoteric programming languages
-- Support for Befunge execution on Linux and macOS
-- Support for LOLCODE execution on Linux, macOS, and Windows
-- New convenience aliases: `runBefunge` and `runLOLCODE`
-
-### v1.1.0
-- Added CBuilder class for C library integration
-- Support for compiling and loading C shared libraries
-- Dynamic function binding with ctypes
-- Performance optimization through C extensions
-
-### v1.0.0
-- Initial release with RGB color support
-- Rainbow text effects
-- Image to ASCII conversion
-- Terminal control functions
-- Text formatting utilities
