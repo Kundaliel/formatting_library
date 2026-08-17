@@ -210,13 +210,37 @@ runLOLCODE("script.lol")
 
 **Supported Languages:**
 - **Befunge**: A two-dimensional esoteric programming language
-  - Supported platforms: Linux, macOS
 - **LOLCODE**: An esoteric language based on lolspeak
-  - Supported platforms: Linux, macOS, Windows
 
 **Requirements:**
-- Language interpreters are included in the package under `_bin/` directory
-- Executables are platform-specific and selected automatically
+
+As of 1.3.0, this package no longer bundles precompiled interpreter
+binaries. Instead, it looks for an interpreter already installed on
+your system:
+
+- Befunge: an executable named `bef98` on your `PATH`
+- LOLCODE: an executable named `lci` on your `PATH` (e.g. [lci](https://github.com/justinmeza/lci))
+
+If you have an interpreter installed under a different name or
+location, point to it explicitly with an environment variable instead
+of relying on PATH lookup:
+
+```bash
+export FORMATTING_LIBRARY_BEFUNGE_BIN=/path/to/your/bef98
+export FORMATTING_LIBRARY_LOLCODE_BIN=/path/to/your/lci
+```
+
+If no interpreter is found, `runBefunge`/`runLOLCODE` raise a
+`FileNotFoundError` with installation instructions rather than
+failing silently.
+
+> **Why the change?** Previously this package shipped precompiled
+> Linux/macOS/Windows binaries inside the wheel. That meant installing
+> `formatting-library` also installed opaque, unauditable executables
+> that were then run by the library on your files. Resolving the
+> interpreter from your own system means you're only ever running
+> binaries you installed and vetted yourself — the package itself
+> stays pure Python.
 
 **Example Befunge Program (hello.bf):**
 ```befunge
@@ -312,7 +336,7 @@ The built-in rainbow uses these RGB values:
 - Python 3.8+
 - Pillow (for image processing)
 - GCC (for C library compilation)
-- Platform-specific esoteric language interpreters (included in package)
+- Befunge and/or LOLCODE interpreters installed separately and available on `PATH` (only needed if you use `Esoteric`/`runBefunge`/`runLOLCODE`)
 
 ## Examples
 

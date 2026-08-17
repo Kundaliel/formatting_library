@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "formatting-library"
-version = "1.2.5.1"
+version = "1.3.0"
 description = "A Python library for terminal text formatting, colors, and ASCII art"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -47,10 +47,6 @@ dev = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/formatting_library"]
-# Only use artifacts, not force-include
-artifacts = [
-    "src/formatting_library/_bin/**/*",
-]
 
 [tool.hatch.build.targets.sdist]
 include = [
