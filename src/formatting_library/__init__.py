@@ -34,13 +34,7 @@ from .image_render import (
     IMAGE_CHARACTER,
     img_to_ascii,
 )
-from .c_builder import CBuilder
-from .esoteric import (
-    Esoteric,
-    runBefunge,
-    runLOLCODE,
-)
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 __author__ = "Kundaliel"
 __email__ = "kundaliel.official@gmail.com"

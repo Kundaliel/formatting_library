@@ -13,8 +13,6 @@ A Python library for terminal text formatting, colors, and ASCII art rendering.
 - Animated/slow printing
 - Text color codes
 - Terminal cursor control and manipulation
-- C library integration for performance-critical operations
-- Esoteric programming language execution (Befunge, LOLCODE)
 
 ## Installation
 
@@ -25,13 +23,14 @@ pip install formatting-library
 ## Quick Start
 
 ```python
-from formatting_library import rainbow_text, slow_print, img_to_ascii
+from formatting_library import rainbow_text, slow_print, img_to_ascii, PrintOptions
 
 # Rainbow text
 print(rainbow_text("Hello, World!"))
 
 # Slow printing with custom speed
-slow_print("This text appears slowly...", speed=20)
+options = PrintOptions(speed=20)
+slow_print("This text appears slowly...", options)
 
 # Convert image to ASCII art
 ascii_art = img_to_ascii("path/to/image.jpg")
@@ -138,11 +137,25 @@ print(formatted(text))
 ### Image to ASCII Art
 
 ```python
+from PIL import Image
 from formatting_library import img_to_ascii
 
 # Convert any image to colorful ASCII art
-ascii_art = img_to_ascii("photo.jpg")
-print(ascii_art)
+img: Image = Image.open('karel.jpg').convert('RGB')
+
+width: int
+height: int
+width, height = img.size
+
+new_width: int = 70
+ratio: float = width / new_width
+
+new_size: tuple[int, int] = (new_width, int(height/ratio))
+resized: Image = img.resize(new_size)
+
+resized.save('karel_resized.jpg')
+
+print(img_to_ascii('karel_resized.jpg'))
 
 # Works with various image formats: JPG, PNG, GIF, etc.
 ```
@@ -190,114 +203,6 @@ Terminal.replace_line(5, "New content for line 5")
 Terminal.set_cursor_position(1, 1)  # Top-left corner
 ```
 
-### Esoteric Programming Languages
-
-Execute esoteric programming languages directly from Python:
-
-```python
-from formatting_library import Esoteric, runBefunge, runLOLCODE
-
-# Run Befunge programs
-Esoteric.runBefunge("hello.bf")
-
-# Run LOLCODE programs
-Esoteric.runLOLCODE("hello.lol")
-
-# Or use the convenient aliases
-runBefunge("program.bf")
-runLOLCODE("script.lol")
-```
-
-**Supported Languages:**
-- **Befunge**: A two-dimensional esoteric programming language
-- **LOLCODE**: An esoteric language based on lolspeak
-
-**Requirements:**
-
-As of 1.3.0, this package no longer bundles precompiled interpreter
-binaries. Instead, it looks for an interpreter already installed on
-your system:
-
-- Befunge: an executable named `bef98` on your `PATH`
-- LOLCODE: an executable named `lci` on your `PATH` (e.g. [lci](https://github.com/justinmeza/lci))
-
-If you have an interpreter installed under a different name or
-location, point to it explicitly with an environment variable instead
-of relying on PATH lookup:
-
-```bash
-export FORMATTING_LIBRARY_BEFUNGE_BIN=/path/to/your/bef98
-export FORMATTING_LIBRARY_LOLCODE_BIN=/path/to/your/lci
-```
-
-If no interpreter is found, `runBefunge`/`runLOLCODE` raise a
-`FileNotFoundError` with installation instructions rather than
-failing silently.
-
-> **Why the change?** Previously this package shipped precompiled
-> Linux/macOS/Windows binaries inside the wheel. That meant installing
-> `formatting-library` also installed opaque, unauditable executables
-> that were then run by the library on your files. Resolving the
-> interpreter from your own system means you're only ever running
-> binaries you installed and vetted yourself — the package itself
-> stays pure Python.
-
-**Example Befunge Program (hello.bf):**
-```befunge
-"!dlroW ,olleH">:#,_@
-```
-
-**Example LOLCODE Program (hello.lol):**
-```lolcode
-HAI 1.2
-  VISIBLE "Hello, World!"
-KTHXBYE
-```
-
-### C Library Integration
-
-⚠️ **Security Warning**: The CBuilder class uses `os.system()` to compile C code and creates directories on your filesystem. Only use with trusted C source files and in secure environments. The build process will:
-- Execute GCC compiler commands via shell
-- Create a `build/` directory in the specified location
-- Generate `.so` shared library files
-- Overwrite existing files with the same name
-
-For performance-critical operations, you can compile and use C libraries:
-
-```c
-// main.c
-#include <stdio.h>
-#include <stdint.h>
-
-void say(char *input) {
-    printf("%s\n", input);
-}
-
-int fast_multiply(int a, int b) {
-    return a * b;
-}
-```
-
-```python
-# main.py
-from formatting_library import CBuilder
-import ctypes
-
-# Build the C library
-builder = CBuilder(".", "main")
-
-# Define functions with proper types
-say = builder.define_function("say", [ctypes.c_char_p])
-multiply = builder.define_function("fast_multiply", 
-                                 [ctypes.c_int, ctypes.c_int], 
-                                 ctypes.c_int)
-
-# Use the functions
-say(b"Hello from C!")
-result = multiply(42, 24)
-print(f"42 * 24 = {result}")
-```
-
 ## Color Reference
 
 ### Rainbow Colors
@@ -335,9 +240,6 @@ The built-in rainbow uses these RGB values:
 
 - Python 3.8+
 - Pillow (for image processing)
-- GCC (for C library compilation)
-- Befunge and/or LOLCODE interpreters installed separately and available on `PATH` (only needed if you use `Esoteric`/`runBefunge`/`runLOLCODE`)
-
 ## Examples
 
 ### Create a Colorful Banner
@@ -372,64 +274,6 @@ for filename in os.listdir("images/"):
     if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
         print(f"\n--- {filename} ---")
         print(img_to_ascii(f"images/{filename}"))
-```
-
-### Esoteric Language Runner
-
-```python
-from formatting_library import runBefunge, runLOLCODE
-
-# Create a simple Befunge program
-with open("hello.bf", "w") as f:
-    f.write("""\
->                                            v
-@,*25,++:*:*:+111,,,,,,,,,,,,,"Hello Befunge"<
-    """)
-
-# Run it
-print("Running Befunge greeting:")
-runBefunge("hello.bf")
-
-# Create a LOLCODE program
-with open("greeting.lol", "w") as f:
-    f.write("""
-HAI 1.4
-  VISIBLE "O HAI, can I haz cheezburger?"
-KTHXBYE
-""")
-
-# Run it
-print("\nRunning LOLCODE greeting:")
-runLOLCODE("greeting.lol")
-```
-
-### Performance Comparison
-
-```python
-from formatting_library import CBuilder, ctypes
-import time
-
-# Python version
-def python_factorial(n):
-    if n <= 1:
-        return 1
-    return n * python_factorial(n - 1)
-
-# C version (factorial.c)
-builder = CBuilder(".", "factorial")
-c_factorial = builder.define_function("factorial", [ctypes.c_int], ctypes.c_int)
-
-# Benchmark
-start = time.time()
-python_result = python_factorial(20)
-python_time = time.time() - start
-
-start = time.time()
-c_result = c_factorial(20)
-c_time = time.time() - start
-
-print(f"Python: {python_result} ({python_time:.6f}s)")
-print(f"C: {c_result} ({c_time:.6f}s)")
 ```
 
 ## License
